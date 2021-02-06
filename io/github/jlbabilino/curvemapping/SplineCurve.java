@@ -244,24 +244,14 @@ public class SplineCurve extends Curve {
         this.splineType = splineType;
     }
     /**
+     * The values at each index <code>0</code> in each index of the
+     * point array MUST BE IN INCREASING ORDER. There is no code in
+     * place to verify this. The array must be a X by 2 array, where
+     * X is any valid array length.
      * @param points the new value of <code>points</code>
      */
     public void setPoints(double[][] points) {
-        boolean arrayVerified = true;
-        if (points != null) {
-            double lastX = Double.MIN_VALUE;
-            for (int i = 0; i < points.length; i++) {
-                if (points[i] != null && points[i].length >= 2 && points[i][0] > lastX) {
-                    lastX = points[i][0];
-                } else {
-                    arrayVerified = false;
-                    break;
-                }
-            }
-        }
-        if (arrayVerified) {
-            this.points = Arrays.copyOf(points, points.length);
-        }
+        this.points = Arrays.copyOf(points, points.length);
     }
     /** accessor methods **/
     /**
