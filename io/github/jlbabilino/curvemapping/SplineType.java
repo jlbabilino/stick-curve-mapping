@@ -1,5 +1,11 @@
 package io.github.jlbabilino.curvemapping;
-/** Types of splines that can be used with <code>SplineCurve</code>.*/
+
+/**
+ * Types of splines that can be used with <code>SplineCurve</code>.
+ * 
+ * @author Justin Babilino
+ * @version 0.0.3
+ */
 public enum SplineType {
     LINEAR,
     SMOOTH,

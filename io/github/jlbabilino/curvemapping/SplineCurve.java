@@ -21,10 +21,13 @@ import java.util.Arrays;
  * <code>LEFT_STEP</code> curves, the value on the interval between points is
  * determined by the value of the leftmost point in the interval.
  *
- * @version 2021-01-31
+ * @author Justin Babilino
+ * @version 0.0.3
  */
 public class SplineCurve extends Curve {
-    /** Types of spline segments used in spline curve */
+    /**
+     * Types of spline segments used in spline curves.
+     */
     private static enum SegmentType {
         LINEAR,
         RIGHT_PARABOLIC,
@@ -33,12 +36,17 @@ public class SplineCurve extends Curve {
         RIGHT_STEP,
         LEFT_STEP
     }
-    /** fields **/
-    /**Determines the type of spline that will pass through <code>points</code>*/
+
+    /**
+     * Determines the type of spline that will pass through <code>points</code>.
+     */
     private SplineType splineType;
-    /**The set of points that the spline passes through.*/
+
+    /**
+     * The set of points that the spline passes through.
+     */
     private double[][] points;
-    /** constructors **/
+
     /**
      * Constructs an Spline Curve object which can
      * be used to map a stick input based on a custom
@@ -57,6 +65,7 @@ public class SplineCurve extends Curve {
         setScalar(scalar);
         setDeadzone(deadzone);
     }
+
     /**
      * Constructs an Spline Curve object which can
      * be used to map a stick input based on a custom
@@ -76,14 +85,11 @@ public class SplineCurve extends Curve {
         setScalar(1.0);
         setDeadzone(0.0);
     }
+    
     /**
-     * Calculates and returns the final value mapped based on the curve
-     * provided.
-     * 
      * @param input value to be mapped
-     * @return mapped value
      */
-    public double calculateMappedVal(double input) {
+    @Override public double calculateMappedVal(double input) {
         double val = calculateOffset(calculateScalar(calculateSplineVal(calculateDeadzone(input))));
         if (val > 1.0) {
             val = 1.0;
@@ -93,6 +99,7 @@ public class SplineCurve extends Curve {
         // val = (double) ((int) (val * 100000.0)) / 100000; // uncomment to round val
         return val;
     }
+
     /**
      * Maps the value of the input to the output using the spline
      * curve provided
@@ -161,6 +168,7 @@ public class SplineCurve extends Curve {
         }
         return val;
     }
+
     private double calculateSplineSegmentVal(double input, SegmentType segmentType, double[] pointA, double[] pointB) {
         switch (segmentType) {
             case LINEAR:
@@ -179,6 +187,7 @@ public class SplineCurve extends Curve {
                 return 0.0;
         }
     }
+
     /**
      * Maps the value of the input to the output using a linear
      * curve between the two points provided.
@@ -191,6 +200,7 @@ public class SplineCurve extends Curve {
     private double calculateLinearSplineVal(double input, double[] pointA, double[] pointB) {
         return ((pointB[1] - pointA[1]) / (pointB[0] - pointA[0])) * (input - pointA[0]) + pointA[1];
     }
+
     /**
      * Maps the value of the input to the output using the parabolic
      * curve between the two points provided.
@@ -205,6 +215,7 @@ public class SplineCurve extends Curve {
         double deltaX = pointB[0] - pointA[0];
         return ((pointB[1] - pointA[1]) / ((deltaX) * (deltaX))) * ((transInput) * (transInput)) + pointA[1];
     }
+
     /**
      * Maps the value of the input to the output using the cubic
      * curve between the two points provided.
@@ -220,6 +231,7 @@ public class SplineCurve extends Curve {
         double deltaY = pointB[1] - pointA[1];
         return ((-2 * deltaY) / (deltaX * deltaX * deltaX)) * (transInput * transInput * transInput) + ((3 * deltaY) / (deltaX * deltaX)) * (transInput * transInput) + pointA[1];
     }
+
     /**
      * Returns a set of points of length <code>pointCount</code> on the curve.
      * 
@@ -236,13 +248,14 @@ public class SplineCurve extends Curve {
         }
         return points;
     }
-    /** mutator methods **/
+
     /**
      * @param splineType the new value of <code>splineType</code>
      */
     public void setSplineType(SplineType splineType) {
         this.splineType = splineType;
     }
+
     /**
      * The values at each index <code>0</code> in each index of the
      * point array MUST BE IN INCREASING ORDER. There is no code in
@@ -253,13 +266,14 @@ public class SplineCurve extends Curve {
     public void setPoints(double[][] points) {
         this.points = Arrays.copyOf(points, points.length);
     }
-    /** accessor methods **/
+
     /**
      * @return the current value of <code>splineType</code>
      */
     public SplineType getSplineType() {
         return splineType;
     }
+
     /**
      * @return the current value of <code>points</code>
      */

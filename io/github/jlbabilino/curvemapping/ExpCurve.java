@@ -1,15 +1,18 @@
 package io.github.jlbabilino.curvemapping;
+
 /**
  * This class maps the value of a stick input to an exponential curve.
  * It is a subclass of <code>Curve</code>.
  *
- * @version 2021-01-30
+ * @author Justin Babilino
+ * @version 0.0.3
  */
 public class ExpCurve extends Curve {
-    /** fields */
-    /** The value of the base of the exponent used in calculating the curve. */
+    /**
+     * The value of the base of the exponent used in calculating the curve.
+     */
     private double expVal;
-    /** constructors */
+
     /**
      * Constructs an Exponential Curve object which can
      * be used to map a stick input exponentially. Initialized
@@ -27,6 +30,7 @@ public class ExpCurve extends Curve {
         setScalar(1.0);
         setDeadzone(0.0);
     }
+
     /**
      * Constructs an Exponential Curve object which can
      * be used to map a stick input exponentially. Initialized
@@ -43,14 +47,11 @@ public class ExpCurve extends Curve {
         setScalar(scalar);
         setDeadzone(deadzone);
     }
-    /** methods */
+
     /**
-     * Returns the value of <code>input</code> mapped value based on the curve.
-     * 
-     * @param  input value to be mapped
-     * @return mapped value
+     * @param input value to be mapped
      */
-    public double calculateMappedVal(double input) {
+    @Override public double calculateMappedVal(double input) {
         double val = calculateOffset(calculateScalar(calculateExpVal(calculateDeadzone(input))));
         if (val > 1.0) {
             val = 1.0;
@@ -59,11 +60,12 @@ public class ExpCurve extends Curve {
         }
         return val;
     }
+
     /**
      * Returns the value of the input mapped by
      * an exponential curve of base <code>expVal</code>.
      * 
-     * @param  input the input value to be mapped
+     * @param input the input value to be mapped
      * @return mapped value
      */
     private double calculateExpVal(double input) {
@@ -73,23 +75,7 @@ public class ExpCurve extends Curve {
         }
         return val;
     }
-    /**
-     * Returns a set of points of length <code>pointCount</code> on the curve.
-     * 
-     * @param  pointCount the amount of points on the curve
-     * @return a 2D double array of points on the curve
-     */
-    public double[][] getCurvePoints(int pointCount) {
-        double[][] points = new double[pointCount][2];
-        double dx = 2.0 / (pointCount - 1);
-        for (int i = 0; i < pointCount; i++) {
-            double x = -1.0 + (i * dx);
-            points[i][0] = x;
-            points[i][1] = calculateMappedVal(x);
-        }
-        return points;
-    }
-    /** mutator methods */
+
     /**
      * Sets the value of <code>expVal</code>, the base of the exponent
      * used to map the input.
@@ -102,7 +88,7 @@ public class ExpCurve extends Curve {
         }
         this.expVal = expVal;
     }
-    /** accessor methods */
+    
     /**
      * Returns the value of <code>expVal</code>, the base of the exponent
      * used to map the input.

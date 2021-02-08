@@ -2,7 +2,8 @@ package io.github.jlbabilino.curvemapping;
 /**
  * Main class used for testing - delete eventually
  *
- * @version 2021-01-31
+ * @author Justin Babilino
+ * @version 0.0.3
  */
 public class Main {
     public static void main(String[] args) {
@@ -18,6 +19,7 @@ public class Main {
         curve.setSplineType(SplineType.SMOOTH);
         curve.setPoints(testPoints);
         // LinCurve curve = new LinCurve(0.0, 1.0, 0.05);
-        curve.printPoints(curve.getCurvePoints(101));
+        curve.printPoints(101);
+        curve.calculateMappedVal(0.4);
     }
 }
