@@ -16,7 +16,7 @@ public class Main {
         //                           { 0.0,  0.0},
         //                           { 0.6,  0.5} };
         SplineCurve curve = new SplineCurve();
-        curve.setSplineType(SplineType.SMOOTH);
+        curve.setSplineType(SplineType.SMOOTH_AT_ENDS);
         curve.setPoints(testPoints);
         // LinCurve curve = new LinCurve(0.0, 1.0, 0.05);
         curve.printPoints(101);
